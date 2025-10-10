@@ -1,0 +1,38 @@
+utente {
+  id: int, not null, unique, PRIMARY
+  
+  first_name: string
+  last_name: string
+  age: int
+  email: string
+  password: string
+  role: string  // 'ADMIN' o 'CUSTOMER'
+  created_at: string
+}
+
+automobile {
+  id: int, not null, unique, PRIMARY
+  
+  brand: string
+  model: string
+  license_plate: string
+  year: int
+  availability: boolean
+  created_at: string
+}
+
+prenotazione {
+  id: int, not null, unique, PRIMARY
+  id_utente: int, not null, unique, FOREIGN
+  id_automobile: int, not null, unique, FOREIGN
+
+  date_start: string
+  date_end: string
+  status: string
+  created_at: string
+}
+
+
+utente (0,n)<-->(1,1) prenotazione
+
+prenotazione (1,n)<-->(1,1) automobile
