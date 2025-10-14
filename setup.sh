@@ -26,20 +26,6 @@ mkdir -vp ./$PROJECT/src/main/java/it/si2001/$PROJECT/config
 mkdir -vp ./$PROJECT/src/main/webapp/WEB-INF
 
 
-# web.xml
-touch ./$PROJECT/src/main/webapp/WEB-INF/web.xml
-cat << EOT > ./$PROJECT/src/main/webapp/WEB-INF/web.xml
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee 
-                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-         version="6.0">
-</web-app>
-EOT
-echo -e "\033[0;32m[INFO]\033[0m created web.xml"
-
-
 # pom.xml
 cat << EOT > ./$PROJECT/pom.xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -131,6 +117,9 @@ cat << EOT > ./$PROJECT/pom.xml
         <plugin>
           <artifactId>maven-war-plugin</artifactId>
           <version>3.4.0</version>
+          <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
         </plugin>
         
       </plugins>
@@ -218,7 +207,7 @@ services:
       - "8060:8080"
   
   tomcat:
-    image: tomcat:latest
+    image: tomcat:9
     restart: unless-stopped
     ports:
       - "8050:8080"
@@ -234,8 +223,22 @@ echo -e "\033[0;32m[INFO]\033[0m created docker-compose.yaml"
 touch ./$PROJECT/build.sh
 cat << EOT > ./$PROJECT/build.sh
 #!/usr/bin/bash
+
+# Clean and prepare war archive
 mvn clean
 mvn package
+
+# Check that war archive exists and is not empty
+WAR_PATH="./target/demo-0.0.1.war"
+while [ ! -s "$WAR_PATH" ]; do
+  echo "Waiting for WAR file to be ready..."
+  # ls -lh "$WAR_PATH"
+  sleep 1
+done
+
+# Run containers
+echo "WAR file is ready. Starting Docker..."
+sudo docker-compose build
 sudo docker-compose up -d
 EOT
 chmod +x ./$PROJECT/build.sh
