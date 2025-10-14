@@ -1,6 +1,7 @@
 services:
+  
   db:
-    image: mysql:9.4.0
+    image: mysql:8.0.33
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: db
@@ -9,6 +10,11 @@ services:
       MYSQL_ROOT_PASSWORD: admin
     volumes:
       - ./.db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysql", "-u", "admin", "-padmin", "-e", "SELECT 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
   
   adminer:
     image: adminer
@@ -18,11 +24,11 @@ services:
   
   tomcat:
     image: tomcat:9.0-jre11
-    container_name: tomcat
     restart: unless-stopped
     ports:
       - "8050:8080"
     volumes:
       - "./target/demo-0.0.1.war:/usr/local/tomcat/webapps/ROOT.war"
-    depends_on: 
-      - db
+    depends_on:
+      db:
+        condition: service_healthy

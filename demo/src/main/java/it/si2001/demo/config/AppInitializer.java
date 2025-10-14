@@ -10,6 +10,7 @@ import javax.servlet.ServletRegistration;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
   
+  // ?
   @Override
   public void onStartup(ServletContext servletContext) throws ServletException {
     AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
@@ -20,18 +21,22 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     dispatcher.addMapping("/");
   }
 
-  // services and data sources
+  // ?
   @Override
   protected Class<?>[] getRootConfigClasses() {
     return new Class[0];
   }
 
-  // controller, view resolver, handler mapping
+  // ?
   @Override
   protected Class<?>[] getServletConfigClasses() {
-    return new Class[]{ AppConfig.class };
+    return new Class[]{ 
+      AppConfig.class,
+      HibernateConfig.class
+    };
   }
 
+  // ?
   @Override
   protected String[] getServletMappings() {
     return new String[]{ "/" };
