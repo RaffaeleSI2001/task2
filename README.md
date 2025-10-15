@@ -12,6 +12,7 @@ A small prototype webapp for renting cars.
 - HikariCP 5.0.1
 - Spring Transactions 5.2.22.RELEASE
 - Hibernate 5.6.15.Final
+- JPA 2.2
 - Spring ORM 5.2.22.RELEASE
 - MySQL 8.0.33
 

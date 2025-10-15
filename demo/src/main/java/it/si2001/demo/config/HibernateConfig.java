@@ -41,7 +41,9 @@ public class HibernateConfig {
     
     Properties properties = new Properties();
     properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-    properties.put("hibernate.hbm2ddl.auto", "validate");
+    // Validates and auto-creates the DB schema
+    // WARNING: NOT SAFE for production (use 'validate' instead)
+    properties.put("hibernate.hbm2ddl.auto", "update");
     properties.put("hibernate.show_sql", "false");
     properties.put("hibernate.format_sql", "false");
     properties.put("hibernate.current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");

@@ -7,7 +7,7 @@ utente {
   email: string
   password: string
   role: string  // 'ADMIN' o 'CUSTOMER'
-  created_at: string
+  created_at: date
 }
 
 automobile {
@@ -18,7 +18,7 @@ automobile {
   license_plate: string
   year: int
   availability: boolean
-  created_at: string
+  created_at: date
 }
 
 prenotazione {
@@ -26,13 +26,12 @@ prenotazione {
   id_utente: int, not null, unique, FOREIGN
   id_automobile: int, not null, unique, FOREIGN
 
-  date_start: string
-  date_end: string
+  startedAt: date
+  endedAt: date
   status: string
-  created_at: string
+  created_at: date
 }
 
 
-utente (0,n)<-->(1,1) prenotazione
-
-prenotazione (1,n)<-->(1,1) automobile
+utente (0,n)<-->(1,n) prenotazione
+prenotazione (n,n)<-->(0,1) automobile
