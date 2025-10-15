@@ -21,3 +21,17 @@ A small prototype webapp for renting cars.
 Start the webapp and the DB with `./run.sh`.
 
 Stop all containers with `./stop/sh`.
+
+## Docs
+
+### SCM Workflow
+
+Gitflow: 
+
+- main branch: `main`
+- development branch: `dev`
+- feature branch (prefix): `feature_`
+- release branch (prefix): `release_`
+- hotfix branch (prefix): `hotfix_`
+
+Every last commit merged to `main` at a certain time must be tagged.
