@@ -35,3 +35,5 @@ Gitflow:
 - hotfix branch (prefix): `hotfix_`
 
 Every last commit merged to `main` at a certain time must be tagged.
+
+Remember to push each `release` and `hotfix` to both `main` and `dev`.
